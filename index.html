@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trabajo Final - ITAE Business School</title>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <style>
+        :root { 
+            --primary: #1E1E1E; /* Gris Carbón ITAE */
+            --accent: #C5A028;  /* Dorado ITAE */
+            --bg: #f8f9fa; 
+            --border: #ced4da; 
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            font-family: 'Roboto', sans-serif; 
+            background: var(--primary); 
+            display: flex; 
+            min-height: 100vh; 
+            overflow-x: hidden; 
+        }
+
+        /* --- CONFIGURACIÓN PARA PC (ESCRITORIO) --- */
+        .main-container { 
+            display: flex; 
+            width: 100%; 
+            height: 100vh; 
+            background: #fff; 
+        }
+
+        .image-panel {
+            width: 45%;
+            background-image: url('https://bitrix24public.com/baltic.bitrix24.es/docs/pub/fe74fc98d5cbb9d9641d47b37a14e683/showFile/?&token=udwehbtm4gfk');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: 25% center; 
+        }
+
+        .form-panel { 
+            width: 55%; 
+            padding: 3rem; 
+            overflow-y: auto; 
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-header h1 { color: var(--primary); margin-bottom: 0.5rem; font-size: 1.8rem; border-left: 5px solid var(--accent); padding-left: 15px; }
+        .form-header p { color: #6c757d; margin-bottom: 2rem; font-size: 0.9rem; padding-left: 20px; }
+
+        .progress-bar { display: flex; justify-content: space-between; margin-bottom: 2.5rem; position: relative; width: 100%; }
+        .progress-step { width: 35px; height: 35px; border-radius: 50%; background: #e9ecef; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-weight: bold; z-index: 2; font-size: 0.8rem; }
+        .progress-step.active { background: var(--accent); color: var(--primary); border-color: var(--accent); }
+        .progress-line { position: absolute; top: 50%; left: 0; height: 4px; background: var(--accent); width: 0%; z-index: 1; transform: translateY(-50%); transition: 0.3s; }
+
+        .form-step { display: none; } 
+        .form-step.active { display: block; }
+        .section h2 { font-size: 1.1rem; color: var(--primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--accent); padding-bottom: 5px; }
+        .field-group { margin-bottom: 1.2rem; }
+        
+        label { display: block; margin-bottom: 5px; font-weight: 500; font-size: 0.85rem; color: var(--primary); }
+        input[type="text"], input[type="email"] { width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 6px; outline: none; font-size: 1rem; }
+        input:focus { border-color: var(--accent); }
+        
+        .options-group label { display: flex; align-items: center; padding: 10px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; }
+        .options-group label:hover { background: #f8f9fa; }
+        .options-group input { width: auto; margin-right: 12px; accent-color: var(--accent); transform: scale(1.2); }
+
+        .file-box { border: 2px dashed var(--accent); padding: 2rem; text-align: center; border-radius: 8px; cursor: pointer; color: var(--primary); font-size: 0.9rem; transition: 0.3s; background: #fffcf5; }
+        .file-box:hover { background: #fef9e7; }
+
+        .navigation { display: flex; justify-content: space-between; margin-top: auto; padding-top: 2rem; }
+        .btn { padding: 0.8rem 2rem; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .btn-next { background: var(--accent); color: var(--primary); flex-grow: 1; margin-left: 10px; } 
+        .btn-next:hover { background: #b08d1e; }
+        .btn-prev { background: #6c757d; color: white; }
+
+        /* --- RESPONSIVIDAD (CELULAR) --- */
+        @media (max-width: 768px) {
+            body { height: auto; overflow-y: auto; }
+            .main-container { flex-direction: column; height: auto; } 
+            .image-panel { 
+                width: 100%; 
+                height: 200px; 
+                background-image: url('https://bitrix24public.com/baltic.bitrix24.es/docs/pub/c4369594a7ee178455958174c600c2bb/showFile/?&token=kh1jr1d0d1o0');
+                background-position: center;
+            } 
+            .form-panel { width: 100%; padding: 1.5rem; height: auto; overflow-y: visible; } 
+            .form-header h1 { font-size: 1.5rem; }
+            .navigation { flex-direction: column-reverse; gap: 10px; }
+            .btn-next { margin-left: 0; }
+            .btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <div class="image-panel"></div>
+    <div class="form-panel">
+        <div class="form-header">
+            <h1>Entrega de Trabajo</h1>
+            <p>Plataforma oficial - ITAE Business School</p>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-line" id="p-line"></div>
+            <div class="progress-step active">1</div>
+            <div class="progress-step">2</div>
+            <div class="progress-step">3</div>
+            <div class="progress-step">4</div>
+        </div>
+        <form id="itaeForm">
+            <div class="form-step active" id="step1">
+                <div class="section">
+                    <h2><i class="fa-solid fa-user"></i> Datos del Grupo</h2>
+                    <div class="field-group"><label>Estudiante 1 (Líder)*</label><input type="text" id="est1" required></div>
+                    <div class="field-group"><label>Estudiante 2</label><input type="text" id="est2"></div>
+                    <div class="field-group"><label>Estudiante 3</label><input type="text" id="est3"></div>
+                    <div class="field-group"><label>Email de contacto*</label><input type="email" id="mail" required></div>
+                </div>
+            </div>
+            <div class="form-step" id="step2">
+                <div class="section">
+                    <h2><i class="fa-solid fa-graduation-cap"></i> Programa Académico</h2>
+                    <div class="options-group">
+                        <label><input type="radio" name="prog" value="MBA" required> Master in Business Administration</label>
+                        <label><input type="radio" name="prog" value="Mkt Digital"> Master en Marketing Digital</label>
+                        <label><input type="radio" name="prog" value="RRHH"> Master en Recursos Humanos</label>
+                        <label><input type="radio" name="prog" value="Finanzas"> Master en Dirección Financiera</label>
+                        <label><input type="radio" name="prog" value="Sostenibilidad"> Master en Sostenibilidad</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-step" id="step3">
+                <div class="section">
+                    <h2><i class="fa-solid fa-book"></i> Curso</h2>
+                    <div id="cursos-container" class="options-group"></div>
+                </div>
+            </div>
+            <div class="form-step" id="step4">
+                <div class="section">
+                    <h2><i class="fa-solid fa-upload"></i> Subir Proyecto</h2>
+                    <div class="field-group"><label>Tema del Trabajo Final*</label><input type="text" id="tema" required></div>
+                    <div class="file-box" onclick="document.getElementById('fileInput').click()">
+                        <i class="fa-solid fa-file-pdf fa-2x" style="color: var(--accent);"></i>
+                        <p id="file-label" style="margin-top:10px">Seleccionar PDF del Proyecto</p>
+                        <input type="file" id="fileInput" accept=".pdf" style="display:none" required>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <button type="button" class="btn btn-prev" id="prevBtn" style="display:none">Atrás</button>
+                <button type="button" class="btn btn-next" id="nextBtn">Siguiente</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzmooNCod1YzHoxmVd3haRimBpdbztqCb-ijXdKTVkgMG-8xvqm9IQQq2HiVt7-BKyibw/exec";
+
+    let current = 0;
+    const steps = document.querySelectorAll('.form-step');
+    const pSteps = document.querySelectorAll('.progress-step');
+    const pLine = document.getElementById('p-line');
+    
+    const courses = {
+        'MBA': ['Liderazgo Estratégico', 'Dirección de Operaciones', 'Economía Global'],
+        'Mkt Digital': ['SEO y SEM', 'Estrategia en Redes Sociales', 'E-commerce'],
+        'RRHH': ['Gestión del Talento', 'Relaciones Laborales', 'Cultura Organizacional'],
+        'Finanzas': ['Análisis de Inversiones', 'Contabilidad Directiva', 'Mercados Financieros'],
+        'Sostenibilidad': ['Responsabilidad Social', 'Economía Circular', 'Gobernanza']
+    };
+
+    function update() {
+        steps.forEach((s, i) => s.classList.toggle('active', i === current));
+        pSteps.forEach((s, i) => s.classList.toggle('active', i <= current));
+        pLine.style.width = (current / 3 * 100) + '%';
+        document.getElementById('prevBtn').style.display = current === 0 ? 'none' : 'block';
+        document.getElementById('nextBtn').innerText = current === 3 ? 'Enviar Proyecto' : 'Siguiente';
+        document.querySelector('.form-panel').scrollTop = 0;
+    }
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
+        const active = steps[current];
+        const inputs = active.querySelectorAll('input[required]');
+        for(let i of inputs) {
+            if(i.type === 'radio') { if(!active.querySelector('input:checked')) return Swal.fire('Atención', 'Selecciona una opción', 'warning'); }
+            else if(!i.value) return Swal.fire('Atención', 'Este campo es obligatorio', 'warning');
+        }
+        if(current < 3) {
+            if(current === 1) {
+                const p = active.querySelector('input:checked').value;
+                const c = document.getElementById('cursos-container');
+                c.innerHTML = '';
+                courses[p].forEach(x => c.innerHTML += `<label><input type="radio" name="curso" value="${x}" required> ${x}</label>`);
+            }
+            current++; update();
+        } else { enviar(); }
+    });
+
+    document.getElementById('prevBtn').addEventListener('click', () => { current--; update(); });
+    document.getElementById('fileInput').addEventListener('change', function() { if(this.files[0]) document.getElementById('file-label').innerText = this.files[0].name; });
+
+    async function enviar() {
+        const f = document.getElementById('fileInput').files[0];
+        if(!f) return Swal.fire('Error', 'Sube el PDF', 'error');
+        
+        Swal.fire({ title: 'Enviando...', text: 'Subiendo proyecto final a ITAE', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+
+        const r = new FileReader();
+        r.readAsDataURL(f);
+        r.onload = async () => {
+            const payload = {
+                idioma: 'ES', 
+                estudiante1: document.getElementById('est1').value,
+                estudiante2: document.getElementById('est2').value,
+                estudiante3: document.getElementById('est3').value,
+                email: document.getElementById('mail').value,
+                programa: document.querySelector('input[name="prog"]:checked').value,
+                curso: document.querySelector('input[name="curso"]:checked').value,
+                tema: document.getElementById('tema').value,
+                archivoContent: r.result.split(',')[1],
+                archivoNombre: `ITAE_${document.getElementById('est1').value.replace(/ /g,"_")}.pdf`
+            };
+            try {
+                await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    cache: 'no-cache',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                // ESTA PARTE ES LA QUE MANEJA EL REINICIO TRAS EL CLIC EN OK
+                Swal.fire('¡Éxito!', 'Proyecto enviado satisfactoriamente.', 'success').then(() => {
+                    location.reload(); // Recarga la página y vuelve al inicio del formulario
+                });
+
+            } catch (error) {
+                Swal.fire('Error', 'No se pudo conectar con el servidor central.', 'error');
+            }
+        };
+    }
+</script>
+</body>
+</html>
