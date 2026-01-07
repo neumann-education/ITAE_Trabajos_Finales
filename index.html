@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <style>
         :root { 
-            --primary: #1E1E1E; /* Gris Carbón ITAE */
-            --accent: #C5A028;  /* Dorado ITAE */
+            --primary: #1E1E1E; 
+            --accent: #C5A028;  
             --bg: #f8f9fa; 
             --border: #ced4da; 
             --danger: #c62828;
@@ -55,106 +55,123 @@
         }
         .encabezado-final { 
             background-color: var(--primary); 
-            color: #FFFFFF; /* CAMBIADO A BLANCO */
+            color: #FFFFFF; 
             padding: 18px 25px; 
             text-transform: uppercase; 
         }
         .encabezado-final h2 { margin: 0; font-size: 19px; font-weight: 700; letter-spacing: 1px; text-align: center; }
 
         .scroll-area { overflow-y: auto; flex-grow: 1; }
-        .alerta-roja { display: flex; align-items: center; gap: 15px; background-color: #fff5f5; border-left: 10px solid var(--danger); padding: 20px 25px; }
+        .alerta-roja { display: flex; align-items: center; gap: 15px; background-color: #fff5f5; border-left: 10px solid var(--danger); padding: 15px 25px; }
         .icono-alerta { font-size: 30px; color: var(--danger); }
-        .texto-alerta { font-size: 15px; font-weight: 700; color: #1a1a1a; }
-        .texto-alerta span { display: block; margin-top: 5px; color: var(--danger); font-size: 14px; text-transform: uppercase; }
-
+        .texto-alerta { font-size: 14px; font-weight: 700; color: #1a1a1a; }
+        .texto-alerta span { display: block; margin-top: 5px; color: var(--danger); font-size: 13px; }
         .contenido-pasos { padding: 20px 25px; text-align: center; }
-        .titulo-instrucciones { font-size: 16px; font-weight: 700; margin-bottom: 15px; color: var(--primary); }
-        
         .caja-imagen { display: flex; justify-content: center; background: #f4f4f4; padding: 10px; border-radius: 8px; }
-        .caja-imagen img { 
-            max-width: 100%; height: auto; max-height: 35vh; 
-            border: 4px solid var(--danger); /* BORDE ROJO MANTENIDO */
-            border-radius: 4px; 
-        }
-
+        .caja-imagen img { max-width: 100%; height: auto; max-height: 35vh; border: 4px solid var(--danger); border-radius: 4px; }
         .btn-container { padding: 20px; text-align: center; background: #fff; }
         .btn-final { padding: 1.1rem 4rem; font-size: 1.2rem; background: var(--primary); color: white; border: 2px solid var(--accent); border-radius: 50px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        .btn-final:hover { transform: scale(1.05); background: #000; color: var(--accent); }
 
         .pie-pagina { background-color: var(--danger); color: white; text-align: center; padding: 12px; font-size: 12px; font-weight: 700; text-transform: uppercase; }
 
-        /* --- DISEÑO DEL FORMULARIO CON ESPACIOS --- */
+        /* --- DISEÑO DEL FORMULARIO CORREGIDO (ESPACIOS) --- */
         .main-container { display: flex; width: 100%; height: 100vh; background: #fff; }
         
-        /* IMAGEN PC */
         .image-panel {
             width: 45%;
             background-image: url('https://bitrix24public.com/baltic.bitrix24.es/docs/pub/fe74fc98d5cbb9d9641d47b37a14e683/showFile/?&token=udwehbtm4gfk');
             background-repeat: no-repeat; background-size: cover; background-position: 25% center; 
         }
 
-        .form-panel { width: 55%; padding: 4rem; overflow-y: auto; display: flex; flex-direction: column; }
-        .form-header { margin-bottom: 3rem; }
-        .form-header h1 { color: var(--primary); font-size: 2.1rem; border-left: 5px solid var(--accent); padding-left: 15px; }
+        .form-panel { 
+            width: 55%; 
+            padding: 2.5rem 3.5rem; /* Ajustado */
+            overflow-y: auto; 
+            display: flex;
+            flex-direction: column;
+        }
 
-        /* ESPACIO EN LA LÍNEA DE TIEMPO */
-        .progress-bar { display: flex; justify-content: space-between; margin-top: 1.5rem; margin-bottom: 4.5rem; position: relative; width: 100%; }
-        .progress-step { width: 35px; height: 35px; border-radius: 50%; background: #e9ecef; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-weight: bold; z-index: 2; }
+        .form-header { margin-bottom: 1.5rem; } /* Reducido de 3rem */
+        .form-header h1 { color: var(--primary); font-size: 1.8rem; border-left: 5px solid var(--accent); padding-left: 15px; }
+        .form-header p { color: #6c757d; font-size: 0.9rem; padding-left: 20px; margin-top: 5px; }
+
+        .progress-bar { 
+            display: flex; justify-content: space-between; 
+            margin-top: 1rem; 
+            margin-bottom: 2rem; /* Reducido de 4.5rem a 2rem */
+            position: relative; width: 100%; 
+        }
+        .progress-step { width: 32px; height: 32px; border-radius: 50%; background: #e9ecef; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-weight: bold; z-index: 2; font-size: 0.85rem; }
         .progress-step.active { background: var(--accent); color: var(--primary); border-color: var(--accent); }
         .progress-line { position: absolute; top: 50%; left: 0; height: 4px; background: var(--accent); width: 0%; z-index: 1; transform: translateY(-50%); transition: 0.3s; }
 
         .form-step { display: none; } .form-step.active { display: block; }
-        .section h2 { font-size: 1.25rem; color: var(--primary); margin-bottom: 2.5rem; border-bottom: 2px solid var(--accent); padding-bottom: 10px; }
         
-        /* SALTO DE LÍNEA ENTRE CAMPOS */
-        .field-group { margin-bottom: 2.8rem; }
-        label { display: block; margin-bottom: 14px; font-weight: 600; font-size: 1rem; color: var(--primary); }
-        input[type="text"], input[type="email"] { width: 100%; padding: 0.95rem; border: 1px solid var(--border); border-radius: 8px; outline: none; font-size: 1rem; }
+        .section h2 { font-size: 1.1rem; color: var(--primary); margin-bottom: 1.2rem; border-bottom: 2px solid var(--accent); padding-bottom: 8px; }
         
-        /* SALTO DE LÍNEA EN LISTA DE OPCIONES */
+        /* ESPACIADO ESTANDARIZADO ENTRE CAMPOS */
+        .field-group { margin-bottom: 1.2rem; } /* Antes estaba en 2.8rem, ahora es estándar */
+        
+        label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.9rem; color: var(--primary); }
+        
+        input[type="text"], input[type="email"] { 
+            width: 100%; 
+            padding: 0.75rem; 
+            border: 1px solid var(--border); 
+            border-radius: 6px; 
+            outline: none; 
+            font-size: 0.95rem; 
+        }
+        
+        /* OPCIONES DE CURSOS */
         .options-group label { 
-            display: flex; align-items: center; padding: 16px; margin-bottom: 16px; 
-            border: 1px solid #eee; border-radius: 8px; cursor: pointer; transition: 0.2s; 
+            display: flex; align-items: center; padding: 10px; margin-bottom: 8px; 
+            border: 1px solid #eee; border-radius: 6px; cursor: pointer; transition: 0.2s; font-size: 0.9rem;
         }
         .options-group label:hover { background: #fdfaf0; border-color: var(--accent); }
-        .options-group input { margin-right: 18px; transform: scale(1.4); accent-color: var(--accent); }
+        .options-group input { margin-right: 12px; transform: scale(1.1); accent-color: var(--accent); }
 
-        /* SEPARACIÓN DEL CUADRO PDF */
-        .file-box { margin-top: 4rem; border: 2px dashed var(--accent); padding: 3.5rem; text-align: center; border-radius: 12px; cursor: pointer; background: #fffcf5; }
+        /* CUADRO PDF CON ESPACIADO CORREGIDO */
+        .file-box { 
+            margin-top: 1rem; 
+            border: 2px dashed var(--accent); 
+            padding: 2rem; 
+            text-align: center; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            background: #fffcf5; 
+        }
 
-        .navigation { display: flex; justify-content: space-between; margin-top: 4rem; }
-        .btn { padding: 1rem 3rem; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.05rem; }
+        .navigation { display: flex; justify-content: space-between; margin-top: 2rem; padding-top: 10px; }
+        .btn { padding: 0.8rem 2.5rem; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1rem; }
         .btn-next { background: var(--accent); color: var(--primary); flex-grow: 1; margin-left: 15px; } 
         .btn-prev { background: #6c757d; color: white; }
 
-        /* --- RESPONSIVIDAD (CELULAR) --- */
         @media (max-width: 768px) {
             body { overflow-y: auto; }
             .main-container { flex-direction: column; height: auto; } 
-            
-            /* IMAGEN CABECERA CELULAR (RESTAURADA) */
             .image-panel { 
-                width: 100%; height: 200px; 
+                width: 100%; height: 180px; 
                 background-image: url('https://bitrix24public.com/baltic.bitrix24.es/docs/pub/c4369594a7ee178455958174c600c2bb/showFile/?&token=kh1jr1d0d1o0'); 
                 background-position: center; 
             } 
-
-            .form-panel { width: 100%; padding: 2rem; } 
-            .encabezado-final h2 { font-size: 16px; }
-            .progress-bar { margin-bottom: 3rem; }
+            .form-panel { width: 100%; padding: 1.5rem; } 
+            .progress-bar { margin-bottom: 2rem; }
         }
     </style>
 </head>
 <body>
 
+<!-- SPLASH INICIAL -->
 <div id="splash-screen" class="splash-layer">
     <div class="splash-content">
-        <h1 style="color: var(--accent); font-size: 3.2rem; margin-bottom: 20px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5);">Bienvenido</h1>
-        <p style="color: white; font-size: 1.3rem; margin-bottom: 40px;">Inicie el proceso de entrega oficial de su trabajo final.</p>
+        <h1 style="color: var(--accent); font-size: 3rem; margin-bottom: 15px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5);">Bienvenido</h1>
+        <p style="color: white; font-size: 1.2rem; margin-bottom: 30px;">Inicie el proceso de entrega oficial de su trabajo final.</p>
         <button class="btn-final" style="background: var(--accent); color: var(--primary);" onclick="startForm()">Comenzar</button>
     </div>
 </div>
 
+<!-- SPLASH FINAL -->
 <div id="final-splash" class="splash-layer">
     <div class="contenedor-confirmacion">
         <div class="encabezado-final"><h2>Registro exitoso – acción obligatoria</h2></div>
@@ -199,7 +216,7 @@
             </div>
             <div class="form-step" id="step2">
                 <div class="section">
-                    <h2><i class="fa-solid fa-graduation-cap"></i> Programa Académico</h2>
+                    <h2><i class="fa-solid fa-graduation-cap"></i> Programa</h2>
                     <div class="options-group">
                         <label><input type="radio" name="prog" value="MBA" required> Master in Business Administration</label>
                         <label><input type="radio" name="prog" value="Mkt Digital"> Master en Marketing Digital</label>
@@ -221,7 +238,7 @@
                     <div class="field-group"><label>Tema del Trabajo Final*</label><input type="text" id="tema" required></div>
                     <div class="file-box" onclick="document.getElementById('fileInput').click()">
                         <i class="fa-solid fa-file-pdf fa-2x" style="color: var(--accent);"></i>
-                        <p id="file-label" style="margin-top:15px; font-weight: bold;">Seleccionar PDF del Proyecto</p>
+                        <p id="file-label" style="margin-top:10px; font-weight: bold;">Seleccionar PDF del Proyecto</p>
                         <input type="file" id="fileInput" accept=".pdf" style="display:none" required>
                     </div>
                 </div>
@@ -289,7 +306,6 @@
         r.readAsDataURL(f);
         r.onload = async () => {
             const payload = {
-                idioma: 'ES', 
                 estudiante1: document.getElementById('est1').value,
                 estudiante2: document.getElementById('est2').value,
                 estudiante3: document.getElementById('est3').value,
