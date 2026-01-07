@@ -13,6 +13,9 @@
             --accent: #C5A028;  /* Dorado ITAE */
             --bg: #f8f9fa; 
             --border: #ced4da; 
+            --danger: #d93025;
+            --overlay-bg: rgba(30, 30, 30, 0.75); /* Difuminado oscuro institucional */
+            --overlay-final: rgba(30, 30, 30, 0.98); 
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
@@ -21,8 +24,103 @@
             background: var(--primary); 
             display: flex; 
             min-height: 100vh; 
-            overflow-x: hidden; 
+            overflow: hidden; 
         }
+
+        /* --- ESTILOS DE SPLASH (INICIAL Y FINAL) --- */
+        .splash-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        #splash-screen { background-color: var(--overlay-bg); }
+        #splash-screen.hidden { transform: translateX(100%); }
+
+        #final-splash { 
+            background-color: var(--overlay-final);
+            transform: translateY(100%); 
+            visibility: hidden; 
+        }
+        #final-splash.visible { transform: translateY(0); visibility: visible; }
+
+        .splash-content h1 { 
+            color: var(--accent); 
+            font-size: 2.5rem; 
+            margin-bottom: 25px; 
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .splash-content p { 
+            color: #fff; 
+            font-size: 1.2rem; 
+            margin-bottom: 45px; 
+            max-width: 600px;
+        }
+
+        /* RECUADRO DE ALERTA ROJO (SPLASH FINAL) */
+        .instruction-box {
+            background: white;
+            border: 4px solid var(--danger);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(217, 48, 37, 0.3);
+            max-width: 650px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .instruction-box i { color: var(--danger); font-size: 3rem; }
+        .instruction-box p { color: #1E1E1E; font-size: 1.3rem; font-weight: 700; text-align: left; margin: 0; line-height: 1.3; }
+        .instruction-box span { color: var(--danger); text-transform: uppercase; display: block; margin-top: 5px; font-size: 1.4rem; }
+
+        .img-instrucciones {
+            max-width: 90%;
+            max-height: 45vh;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            margin-bottom: 10px;
+            border: 4px solid var(--danger); /* Borde rojo pedido */
+        }
+
+        .arrow-down {
+            font-size: 2.5rem;
+            color: var(--accent);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+
+        .btn-start, .btn-finish {
+            padding: 1.2rem 4rem;
+            font-size: 1.3rem;
+            background: var(--accent);
+            color: var(--primary);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            transition: 0.3s;
+        }
+        .btn-start:hover, .btn-finish:hover { transform: scale(1.05); background: #e5b92d; }
 
         /* --- CONFIGURACIÓN PARA PC (ESCRITORIO) --- */
         .main-container { 
@@ -59,13 +157,11 @@
         .form-step { display: none; } 
         .form-step.active { display: block; }
         .section h2 { font-size: 1.1rem; color: var(--primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--accent); padding-bottom: 5px; }
-        .field-group { margin-bottom: 1.2rem; }
         
         label { display: block; margin-bottom: 5px; font-weight: 500; font-size: 0.85rem; color: var(--primary); }
         input[type="text"], input[type="email"] { width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 6px; outline: none; font-size: 1rem; }
-        input:focus { border-color: var(--accent); }
         
-        .options-group label { display: flex; align-items: center; padding: 10px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; }
+        .options-group label { display: flex; align-items: center; padding: 10px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; transition: background 0.2s; }
         .options-group label:hover { background: #f8f9fa; }
         .options-group input { width: auto; margin-right: 12px; accent-color: var(--accent); transform: scale(1.2); }
 
@@ -75,10 +171,8 @@
         .navigation { display: flex; justify-content: space-between; margin-top: auto; padding-top: 2rem; }
         .btn { padding: 0.8rem 2rem; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s; }
         .btn-next { background: var(--accent); color: var(--primary); flex-grow: 1; margin-left: 10px; } 
-        .btn-next:hover { background: #b08d1e; }
         .btn-prev { background: #6c757d; color: white; }
 
-        /* --- RESPONSIVIDAD (CELULAR) --- */
         @media (max-width: 768px) {
             body { height: auto; overflow-y: auto; }
             .main-container { flex-direction: column; height: auto; } 
@@ -89,14 +183,41 @@
                 background-position: center;
             } 
             .form-panel { width: 100%; padding: 1.5rem; height: auto; overflow-y: visible; } 
-            .form-header h1 { font-size: 1.5rem; }
-            .navigation { flex-direction: column-reverse; gap: 10px; }
-            .btn-next { margin-left: 0; }
-            .btn { width: 100%; }
+            .instruction-box { flex-direction: column; text-align: center; }
+            .instruction-box p { text-align: center; font-size: 1.1rem; }
         }
     </style>
 </head>
 <body>
+
+<!-- CAPA 1: SPLASH SCREEN INICIAL (DIFUMINADO) -->
+<div id="splash-screen" class="splash-layer">
+    <div class="splash-content">
+        <h1>Bienvenido</h1>
+        <p>Inicie el proceso de entrega oficial de su trabajo final en ITAE Business School.</p>
+        <button class="btn-start" onclick="startForm()">Comenzar</button>
+    </div>
+</div>
+
+<!-- CAPA 2: SPLASH SCREEN FINAL (INDICACIONES) -->
+<div id="final-splash" class="splash-layer">
+    <div class="splash-content">
+        <div class="instruction-box">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <p>
+                REGISTRO EXITOSO en el sistema. <br>
+                <span>PARA CONFIRMAR TU REGISTRO NO OLVIDAR:</span>
+                seguir las indicaciones de la imagen inferior
+            </p>
+        </div>
+        <div class="arrow-down">
+            <i class="fa-solid fa-angles-down"></i>
+        </div>
+        <img src="https://final-paper.blackwell.university/img/Indicaciones.jpg" alt="Instrucciones" class="img-instrucciones">
+        <br>
+        <button class="btn-finish" onclick="location.reload()">Entendido</button>
+    </div>
+</div>
 
 <div class="main-container">
     <div class="image-panel"></div>
@@ -162,6 +283,17 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzmooNCod1YzHoxmVd3haRimBpdbztqCb-ijXdKTVkgMG-8xvqm9IQQq2HiVt7-BKyibw/exec";
+
+    function startForm() {
+        document.getElementById('splash-screen').classList.add('hidden');
+        document.body.style.overflow = "auto";
+    }
+
+    function showFinalSplash() {
+        Swal.close(); 
+        document.body.style.overflow = "hidden"; 
+        document.getElementById('final-splash').classList.add('visible');
+    }
 
     let current = 0;
     const steps = document.querySelectorAll('.form-step');
@@ -236,10 +368,7 @@
                     body: JSON.stringify(payload)
                 });
                 
-                // ESTA PARTE ES LA QUE MANEJA EL REINICIO TRAS EL CLIC EN OK
-                Swal.fire('¡Éxito!', 'Proyecto enviado satisfactoriamente.', 'success').then(() => {
-                    location.reload(); // Recarga la página y vuelve al inicio del formulario
-                });
+                showFinalSplash();
 
             } catch (error) {
                 Swal.fire('Error', 'No se pudo conectar con el servidor central.', 'error');
