@@ -9,12 +9,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <style>
         :root { 
-            --primary: #1E1E1E; /* Gris Carbón ITAE */
-            --accent: #C5A028;  /* Dorado ITAE */
+            --primary: #1E1E1E; 
+            --accent: #C5A028;  
             --bg: #f8f9fa; 
             --border: #ced4da; 
             --danger: #c62828;
-            --azul-marino: #0b2a4a;
             --overlay-bg: rgba(30, 30, 30, 0.75); 
             --overlay-final: rgba(255, 255, 255, 0.98); 
         }
@@ -50,7 +49,6 @@
         }
         #final-splash.visible { transform: translateY(0); visibility: visible; }
 
-        /* --- CONTENEDOR DE CONFIRMACIÓN FINAL --- */
         .contenedor-confirmacion {
             max-width: 800px; width: 95%; border: 3px solid var(--primary);
             border-radius: 12px; overflow: hidden; background: white;
@@ -82,7 +80,6 @@
         }
         .btn-final:hover { transform: scale(1.05); background: #000; color: var(--accent); }
 
-        /* --- DISEÑO DEL FORMULARIO (ESPACIOS CORREGIDOS) --- */
         .main-container { display: flex; width: 100%; height: 100vh; background: #fff; }
         .image-panel {
             width: 45%;
@@ -102,11 +99,11 @@
         .form-step { display: none; } .form-step.active { display: block; }
         .section h2 { font-size: 1.1rem; color: var(--primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--accent); padding-bottom: 8px; }
         
-        .field-group { margin-bottom: 1.5rem; } /* Espacio estandarizado */
+        .field-group { margin-bottom: 1.5rem; } 
         label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.95rem; color: var(--primary); }
         input[type="text"], input[type="email"] { width: 100%; padding: 0.85rem; border: 1px solid var(--border); border-radius: 8px; outline: none; font-size: 1rem; }
         
-        .options-group label { display: flex; align-items: center; padding: 12px; margin-bottom: 10px; border: 1px solid #eee; border-radius: 8px; cursor: pointer; transition: 0.2s; }
+        .options-group label { display: flex; align-items: center; padding: 10px; margin-bottom: 8px; border: 1px solid #eee; border-radius: 8px; cursor: pointer; transition: 0.2s; }
         .options-group label:hover { background: #fdfaf0; border-color: var(--accent); }
         .options-group input { margin-right: 15px; transform: scale(1.2); accent-color: var(--accent); }
 
@@ -133,7 +130,7 @@
 <div id="splash-screen" class="splash-layer">
     <div class="splash-content">
         <h1 style="color: var(--accent); font-size: 3.2rem; margin-bottom: 15px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5);">Bienvenido</h1>
-        <p style="color: white; font-size: 1.25rem; margin-bottom: 35px;">Inicie el proceso de entrega oficial de su trabajo final en ITAE.</p>
+        <p style="color: white; font-size: 1.25rem; margin-bottom: 35px;">Inicie el proceso de entrega oficial de su trabajo final en ITAE Business School.</p>
         <button class="btn-final" style="background: var(--accent); color: var(--primary);" onclick="startForm()">Comenzar</button>
     </div>
 </div>
@@ -171,7 +168,6 @@
             <div class="progress-step">4</div>
         </div>
         <form id="itaeForm">
-            <!-- PASO 1: INDIVIDUAL -->
             <div class="form-step active" id="step1">
                 <div class="section">
                     <h2><i class="fa-solid fa-user"></i> Datos del Alumno</h2>
@@ -179,20 +175,23 @@
                     <div class="field-group"><label>Email de contacto*</label><input type="email" id="mail" required></div>
                 </div>
             </div>
-            <!-- PASO 2: PROGRAMAS -->
             <div class="form-step" id="step2">
                 <div class="section">
                     <h2><i class="fa-solid fa-graduation-cap"></i> Programa Académico</h2>
                     <div class="options-group">
-                        <label><input type="radio" name="prog" value="MBA" required> Master in Business Administration</label>
-                        <label><input type="radio" name="prog" value="Mkt Digital"> Master en Marketing Digital</label>
-                        <label><input type="radio" name="prog" value="RRHH"> Master en Recursos Humanos</label>
-                        <label><input type="radio" name="prog" value="Finanzas"> Master en Dirección Financiera</label>
-                        <label><input type="radio" name="prog" value="Sostenibilidad"> Master en Sostenibilidad</label>
+                        <label><input type="radio" name="prog" value="MCPF" required> Máster en Criminología y Psicología Forense</label>
+                        <label><input type="radio" name="prog" value="MGCSP"> Máster en Gestión de la Calidad y Seguridad del Paciente</label>
+                        <label><input type="radio" name="prog" value="MSNCO"> Máster en Seguridad Nacional y Crimen Organizado</label>
+                        <label><input type="radio" name="prog" value="MEREV"> Máster en Energías Renovables (Solar, Eólica, Biomasa, Hidrógeno)</label>
+                        <label><input type="radio" name="prog" value="MESPP"> Máster en Economía de la Salud y Políticas Públicas</label>
+                        <label><input type="radio" name="prog" value="MECFV"> Máster en Economía Circular y Finanzas Verdes</label>
+                        <label><input type="radio" name="prog" value="MCDFD"> Máster en Cibercrimen y Delitos Financieros Digitales</label>
+                        <label><input type="radio" name="prog" value="MAINEF"> Máster en AI aplicada a Negocios y Finanzas</label>
+                        <label><input type="radio" name="prog" value="MASGP"> Máster en Agile, Scrum y Gestión de Proyectos Digitales</label>
+                        <label><input type="radio" name="prog" value="MMLDL"> Máster en Machine Learning y Deep Learning Avanzado</label>
                     </div>
                 </div>
             </div>
-            <!-- PASO 3: CURSOS + OTROS -->
             <div class="form-step" id="step3">
                 <div class="section">
                     <h2><i class="fa-solid fa-book"></i> Curso</h2>
@@ -203,7 +202,6 @@
                     </div>
                 </div>
             </div>
-            <!-- PASO 4: SUBIDA -->
             <div class="form-step" id="step4">
                 <div class="section">
                     <h2><i class="fa-solid fa-upload"></i> Subir Proyecto</h2>
@@ -225,7 +223,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzX6vYB7vRPMhpbxgOsI8O-sHlvBqx3Hwi-LChqGL_ZXWyUdVf08DgPT60lXF-TJPxg/exec";
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyhNusX6u3hdZa3FjWSjDq1uow4K0caR1TYWvJwTP5VW2JYtMQZ_tdvhMY_pngNS-8aGQ/exec";
     function startForm() { document.getElementById('splash-screen').classList.add('hidden'); document.body.style.overflow = "auto"; }
     function showFinalSplash() { Swal.close(); document.body.style.overflow = "hidden"; document.getElementById('final-splash').classList.add('visible'); }
 
@@ -235,11 +233,16 @@
     const pLine = document.getElementById('p-line');
     
     const courses = {
-        'MBA': ['Liderazgo Estratégico', 'Dirección de Operaciones', 'Economía Global', 'Otros'],
-        'Mkt Digital': ['SEO y SEM', 'Estrategia en Redes Sociales', 'E-commerce', 'Otros'],
-        'RRHH': ['Gestión del Talento', 'Relaciones Laborales', 'Cultura Organizacional', 'Otros'],
-        'Finanzas': ['Análisis de Inversiones', 'Contabilidad Directiva', 'Mercados Financieros', 'Otros'],
-        'Sostenibilidad': ['Responsabilidad Social', 'Economía Circular', 'Gobernanza', 'Otros']
+        'MCPF': ['Victimología', 'Ética en la Justicia Penal', 'Perspectivas Criminológicas', 'Crimen Cibernético y Psicología Forense', 'Psicología del Testimonio', 'Evaluación Psicológica en Contextos Forenses', 'Otros'],
+        'MGCSP': ['Evaluación y Mejora de la Calidad en la Atención Médica', 'Teoría y Comportamiento Organizacional en el Cuidado de la Salud', 'Temas Legales y Éticos en la Atención Médica', 'Gestión del Riesgo en la Atención Sanitaria', 'Psicología del Paciente y Comunicación en Salud', 'Innovación y Tecnología en la Atención Médica', 'Otros'],
+        'MSNCO': ['Fuerzas del Orden y Sociedad', 'Tecnología y Justicia Penal', 'Política Criminal Comparada', 'Seguridad Nacional y Estrategias de Prevención', 'Crimen Organizacional y Redes delictivas', 'Ciberseguridad y Delincuencia Cibernética', 'Otros'],
+        'MEREV': ['Tecnologías de Energía Solar Fotovoltaica', 'Sistemas de Energía Eólica', 'Biomasa y Bioenergía Sostenible', 'Tecnologías de Aprovechamiento Geotérmico', 'Tecnologías de Aprovechamiento Hidráulico', 'Tecnologías de Captación en Energía Oceánica', 'Otros'],
+        'MESPP': ['Administración Pública', 'Gestión Financiera y Presupuestaria para Organizaciones Públicas', 'Gestión Estratégica de Organizaciones de Atención Médica', 'Economía del Bienestar y Salud', 'Evaluación Económica de Tecnologías Sanitarias', 'Ética y Economía de la Salud', 'Otros'],
+        'MECFV': ['Política Energética y Sostenibilidad', 'Economía y Mercados de la Energía', 'Optimización de la Eficiencia Energética', 'Finanzas para Proyectos Sostenibles', 'Gestión de Residuos y Recursos en la Economía Circular', 'Innovación y Emprendimiento Sostenible', 'Otros'],
+        'MCDFD': ['Computación y Ciberseguridad', 'Análisis Forense Digital', 'Ética y Legislación en Ciberseguridad', 'Delitos Financieros Digitales y Métodos de Prevención', 'Criminalística en el Ámbito Digital', 'Respuesta a Incidentes y Recuperación de Crisis', 'Otros'],
+        'MAINEF': ['Aplicaciones Empresariales de la Inteligencia Artificial', 'Aprendizaje Automático', 'Ética en la Inteligencia Artificial', 'Inteligencia Artificial en la Toma de Decisiones Financieras', 'Transformación Digital mediante IA', 'Análisis Predictivo y Big Data', 'Otros'],
+        'MASGP': ['Gestión del Cambio y la Transición', 'Gestión Estratégica de Proyectos', 'Gestión de Riesgos y Calidad', 'Metodologías Ágiles Avanzadas', 'Transformación Digital y Agile', 'Cultura Organizacional en Proyectos Ágiles', 'Otros'],
+        'MMLDL': ['Aprendizaje Automático', 'Redes Neuronales y Aprendizaje Profundo', 'Procesamiento de Lenguaje Natural (PLN)', 'Machine Learning Interpretabilidad y Explicabilidad', 'Desarrollo de Aplicaciones de Aprendizaje Profundo', 'Ética y Regulación en IA Avanzada', 'Otros']
     };
 
     function update() {
@@ -261,7 +264,7 @@
             const inputs = active.querySelectorAll('input[required]');
             for(let i of inputs) {
                 if(i.type === 'radio') { if(!active.querySelector('input:checked')) return Swal.fire('Atención', 'Selecciona una opción', 'warning'); }
-                else if(!i.value) return Swal.fire('Atención', 'Campo obligatorio', 'warning');
+                else if(!i.value) return Swal.fire('Atención', 'Este campo es obligatorio', 'warning');
             }
         }
         if(current < 3) {
