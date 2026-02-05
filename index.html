@@ -14,6 +14,7 @@
             --bg: #f8f9fa; 
             --border: #ced4da; 
             --danger: #c62828;
+            --azul-marino: #0b2a4a;
             --overlay-bg: rgba(30, 30, 30, 0.75); 
             --overlay-final: rgba(255, 255, 255, 0.98); 
         }
@@ -49,6 +50,7 @@
         }
         #final-splash.visible { transform: translateY(0); visibility: visible; }
 
+        /* --- CONTENEDOR DE CONFIRMACIÓN FINAL --- */
         .contenedor-confirmacion {
             max-width: 800px; width: 95%; border: 3px solid var(--primary);
             border-radius: 12px; overflow: hidden; background: white;
@@ -80,6 +82,7 @@
         }
         .btn-final:hover { transform: scale(1.05); background: #000; color: var(--accent); }
 
+        /* --- DISEÑO DEL FORMULARIO --- */
         .main-container { display: flex; width: 100%; height: 100vh; background: #fff; }
         .image-panel {
             width: 45%;
@@ -195,7 +198,9 @@
             <div class="form-step" id="step3">
                 <div class="section">
                     <h2><i class="fa-solid fa-book"></i> Curso</h2>
-                    <div id="cursos-container" class="options-group"></div>
+                    <div id="cursos-container" class="options-group">
+                        <p style="color: #666;">Cargando cursos...</p>
+                    </div>
                     <div id="otros-curso-container" class="field-group">
                         <label>Especifique su curso*</label>
                         <input type="text" id="otro-curso-input" placeholder="Nombre del curso">
@@ -223,7 +228,25 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz7ytungacRfhQyCAJ_VEpt61x7nFR94vRr-rFisybsAwatmi3sDGN9rrPpB1omMcWr/exec";
+    // URL de tu Web App de ITAE
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxVwzjVuxR-QUva_FPr22Y1JjQGunQ_SW1riqmzMkOHVKaBOkONPtepRxyDq9UWYdF9/exec";
+
+    let courses = {};
+
+    // CARGA DINÁMICA DESDE EL SHEET
+    async function loadCourses() {
+        try {
+            const response = await fetch(`${WEB_APP_URL}?get=courses`);
+            courses = await response.json();
+            document.getElementById('cursos-container').innerHTML = '<p style="color: #666;">Seleccione un programa primero.</p>';
+        } catch (e) {
+            console.error("Error cargando cursos:", e);
+            Swal.fire('Error', 'No se pudieron cargar los cursos dinámicamente.', 'error');
+        }
+    }
+
+    window.onload = loadCourses;
+
     function startForm() { document.getElementById('splash-screen').classList.add('hidden'); document.body.style.overflow = "auto"; }
     function showFinalSplash() { Swal.close(); document.body.style.overflow = "hidden"; document.getElementById('final-splash').classList.add('visible'); }
 
@@ -231,19 +254,6 @@
     const steps = document.querySelectorAll('.form-step');
     const pSteps = document.querySelectorAll('.progress-step');
     const pLine = document.getElementById('p-line');
-    
-    const courses = {
-        'MCPF': ['Victimología', 'Ética en la Justicia Penal', 'Perspectivas Criminológicas', 'Crimen Cibernético y Psicología Forense', 'Psicología del Testimonio', 'Evaluación Psicológica en Contextos Forenses', 'Otros'],
-        'MGCSP': ['Evaluación y Mejora de la Calidad en la Atención Médica', 'Teoría y Comportamiento Organizacional en el Cuidado de la Salud', 'Temas Legales y Éticos en la Atención Médica', 'Gestión del Riesgo en la Atención Sanitaria', 'Psicología del Paciente y Comunicación en Salud', 'Innovación y Tecnología en la Atención Médica', 'Otros'],
-        'MSNCO': ['Fuerzas del Orden y Sociedad', 'Tecnología y Justicia Penal', 'Política Criminal Comparada', 'Seguridad Nacional y Estrategias de Prevención', 'Crimen Organizacional y Redes delictivas', 'Ciberseguridad y Delincuencia Cibernética', 'Otros'],
-        'MEREV': ['Tecnologías de Energía Solar Fotovoltaica', 'Sistemas de Energía Eólica', 'Biomasa y Bioenergía Sostenible', 'Tecnologías de Aprovechamiento Geotérmico', 'Tecnologías de Aprovechamiento Hidráulico', 'Tecnologías de Captación en Energía Oceánica', 'Otros'],
-        'MESPP': ['Administración Pública', 'Gestión Financiera y Presupuestaria para Organizaciones Públicas', 'Gestión Estratégica de Organizaciones de Atención Médica', 'Economía del Bienestar y Salud', 'Evaluación Económica de Tecnologías Sanitarias', 'Ética y Economía de la Salud', 'Otros'],
-        'MECFV': ['Política Energética y Sostenibilidad', 'Economía y Mercados de la Energía', 'Optimización de la Eficiencia Energética', 'Finanzas para Proyectos Sostenibles', 'Gestión de Residuos y Recursos en la Economía Circular', 'Innovación y Emprendimiento Sostenible', 'Otros'],
-        'MCDFD': ['Computación y Ciberseguridad', 'Análisis Forense Digital', 'Ética y Legislación en Ciberseguridad', 'Delitos Financieros Digitales y Métodos de Prevención', 'Criminalística en el Ámbito Digital', 'Respuesta a Incidentes y Recuperación de Crisis', 'Otros'],
-        'MAINEF': ['Aplicaciones Empresariales de la Inteligencia Artificial', 'Aprendizaje Automático', 'Ética en la Inteligencia Artificial', 'Inteligencia Artificial en la Toma de Decisiones Financieras', 'Transformación Digital mediante IA', 'Análisis Predictivo y Big Data', 'Otros'],
-        'MASGP': ['Gestión del Cambio y la Transición', 'Gestión Estratégica de Proyectos', 'Gestión de Riesgos y Calidad', 'Metodologías Ágiles Avanzadas', 'Transformación Digital y Agile', 'Cultura Organizacional en Proyectos Ágiles', 'Otros'],
-        'MMLDL': ['Aprendizaje Automático', 'Redes Neuronales y Aprendizaje Profundo', 'Procesamiento de Lenguaje Natural (PLN)', 'Machine Learning Interpretabilidad y Explicabilidad', 'Desarrollo de Aplicaciones de Aprendizaje Profundo', 'Ética y Regulación en IA Avanzada', 'Otros']
-    };
 
     function update() {
         steps.forEach((s, i) => s.classList.toggle('active', i === current));
@@ -264,7 +274,7 @@
             const inputs = active.querySelectorAll('input[required]');
             for(let i of inputs) {
                 if(i.type === 'radio') { if(!active.querySelector('input:checked')) return Swal.fire('Atención', 'Selecciona una opción', 'warning'); }
-                else if(!i.value) return Swal.fire('Atención', 'Este campo es obligatorio', 'warning');
+                else if(!i.value) return Swal.fire('Atención', 'Campo obligatorio', 'warning');
             }
         }
         if(current < 3) {
@@ -274,14 +284,16 @@
                 const otrosContainer = document.getElementById('otros-curso-container');
                 otrosContainer.style.display = 'none';
                 c.innerHTML = '';
-                courses[p].forEach(x => {
-                    const label = document.createElement('label');
-                    label.innerHTML = `<input type="radio" name="curso" value="${x}" required> ${x}`;
-                    label.querySelector('input').addEventListener('change', (e) => {
-                        otrosContainer.style.display = e.target.value === 'Otros' ? 'block' : 'none';
+                if(courses[p]) {
+                    courses[p].forEach(x => {
+                        const label = document.createElement('label');
+                        label.innerHTML = `<input type="radio" name="curso" value="${x}" required> ${x}`;
+                        label.querySelector('input').addEventListener('change', (e) => {
+                            otrosContainer.style.display = e.target.value === 'Otros' ? 'block' : 'none';
+                        });
+                        c.appendChild(label);
                     });
-                    c.appendChild(label);
-                });
+                }
             }
             current++; update();
         } else { enviar(); }
